@@ -26,6 +26,19 @@
 #include "stm32l4xx_nucleo_32.h"
 
 /* Exported types ------------------------------------------------------------*/
+
+typedef struct
+{
+    float x;             // Estimated value
+    float P;             // Estimation error
+    float Q;             // Process noise
+    float R;             // Measurement noise
+    unsigned char init;  // Initialization flag
+} KalmanFilter_t;
+
+void Kalman_Init(KalmanFilter_t *kf, float Q, float R, float initial_P);
+float Kalman_Update(KalmanFilter_t *kf, float measurement);
+
 /* Exported constants --------------------------------------------------------*/
 
 //		MATH

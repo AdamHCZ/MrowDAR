@@ -72,7 +72,7 @@ I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pcd.h)(0x5DEE6E73)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_usb.h)(0x5DEE6E73)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pcd_ex.h)(0x5DEE6E73)
 F (startup_stm32l432xx.s)(0x5DEE6E73)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include--pd "__UVISION_VERSION SETA 531" --pd "_RTE_ SETA 1" --pd "STM32L432xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32l432xx.lst --xref -o stm32l432kc_nucleo\startup_stm32l432xx.o --depend stm32l432kc_nucleo\startup_stm32l432xx.d)
-F (../readme.txt)(0x5DEE6E73)()
+F (../readme.txt)(0x00000000)()
 F (../Src/stm32l4xx_it.c)(0x5DEE6E73)(-c --cpu Cortex-M4.fp.sp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../../../../Drivers/CMSIS/Include -I ../../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../../../../Drivers/STM32L4xx_HAL_Driver/Inc -I ../../../../Drivers/BSP/STM32L4xx_Nucleo_32 -I ..\ssd1306\Inc --C99-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32L432xx -D_RTE_ -DSTM32L432xx -DUSE_HAL_DRIVER-o stm32l432kc_nucleo\stm32l4xx_it.o --omf_browse stm32l432kc_nucleo\stm32l4xx_it.crf --depend stm32l432kc_nucleo\stm32l4xx_it.d)
 I (../Inc/main.h)(0x6A29775D)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h)(0x5DEE6E73)
@@ -146,7 +146,7 @@ I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_usb.h)(0x5DEE6E73)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pcd_ex.h)(0x5DEE6E73)
 I (../../../../Drivers/BSP/STM32L4xx_Nucleo_32/stm32l4xx_nucleo_32.h)(0x5DEE6E73)
 I (../Inc/stm32l4xx_it.h)(0x5DEE6E73)
-F (..\Src\Mrowdar.c)(0x6A2980A4)(-c --cpu Cortex-M4.fp.sp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../../../../Drivers/CMSIS/Include -I ../../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../../../../Drivers/STM32L4xx_HAL_Driver/Inc -I ../../../../Drivers/BSP/STM32L4xx_Nucleo_32 -I ..\ssd1306\Inc --C99-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32L432xx -D_RTE_ -DSTM32L432xx -DUSE_HAL_DRIVER-o stm32l432kc_nucleo\mrowdar.o --omf_browse stm32l432kc_nucleo\mrowdar.crf --depend stm32l432kc_nucleo\mrowdar.d)
+F (..\Src\Mrowdar.c)(0x6A380135)(-c --cpu Cortex-M4.fp.sp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../../../../Drivers/CMSIS/Include -I ../../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../../../../Drivers/STM32L4xx_HAL_Driver/Inc -I ../../../../Drivers/BSP/STM32L4xx_Nucleo_32 -I ..\ssd1306\Inc --C99-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32L432xx -D_RTE_ -DSTM32L432xx -DUSE_HAL_DRIVER-o stm32l432kc_nucleo\mrowdar.o --omf_browse stm32l432kc_nucleo\mrowdar.crf --depend stm32l432kc_nucleo\mrowdar.d)
 I (../Inc/main.h)(0x6A29775D)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h)(0x5DEE6E73)
 I (../Inc/stm32l4xx_hal_conf.h)(0x5DEE6E73)
@@ -223,10 +223,10 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC81EC4)
 I (..\ssd1306\Inc\ssd1306.h)(0x69F277CD)
 I (..\ssd1306\Inc\ssd1306_tests.h)(0x69FB719A)
 I (..\ssd1306\Inc\ssd1306_fonts.h)(0x6863A5C0)
-I (../Inc/functions.h)(0x6A29775B)
+I (../Inc/functions.h)(0x6A32CF2A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5EC81EB6)
-F (..\Src\functions.c)(0x6A297E4C)(-c --cpu Cortex-M4.fp.sp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../../../../Drivers/CMSIS/Include -I ../../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../../../../Drivers/STM32L4xx_HAL_Driver/Inc -I ../../../../Drivers/BSP/STM32L4xx_Nucleo_32 -I ..\ssd1306\Inc --C99-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32L432xx -D_RTE_ -DSTM32L432xx -DUSE_HAL_DRIVER-o stm32l432kc_nucleo\functions.o --omf_browse stm32l432kc_nucleo\functions.crf --depend stm32l432kc_nucleo\functions.d)
-I (../Inc/functions.h)(0x6A29775B)
+F (..\Src\functions.c)(0x6A32CF70)(-c --cpu Cortex-M4.fp.sp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../../../../Drivers/CMSIS/Include -I ../../../../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../../../../Drivers/STM32L4xx_HAL_Driver/Inc -I ../../../../Drivers/BSP/STM32L4xx_Nucleo_32 -I ..\ssd1306\Inc --C99-I.\RTE\_STM32L432KC_NUCLEO-IC:\Users\addhu\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32L432xx -D_RTE_ -DSTM32L432xx -DUSE_HAL_DRIVER-o stm32l432kc_nucleo\functions.o --omf_browse stm32l432kc_nucleo\functions.crf --depend stm32l432kc_nucleo\functions.d)
+I (../Inc/functions.h)(0x6A32CF2A)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h)(0x5DEE6E73)
 I (../Inc/stm32l4xx_hal_conf.h)(0x5DEE6E73)
 I (../../../../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h)(0x5DEE6E73)

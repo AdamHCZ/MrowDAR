@@ -168,7 +168,7 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>who,0x10</ItemText>
+          <ItemText>lineReady,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
@@ -179,6 +179,11 @@
           <count>5</count>
           <WinNumber>1</WinNumber>
           <ItemText>x_acc,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rxBuffer</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -255,7 +260,7 @@
 
   <Group>
     <GroupName>Example/MDK-ARM</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

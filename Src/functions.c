@@ -5,6 +5,40 @@
 */
 #include "functions.h"
 
+void Kalman_Init(KalmanFilter_t *kf, float Q, float R, float initial_P)
+{
+    (*kf).x = 0.0f;
+    (*kf).P = initial_P;
+    (*kf).Q = Q;
+    (*kf).R = R;
+    (*kf).init = 0;
+}
+
+float Kalman_Update(KalmanFilter_t *kf, float measurement)
+{
+    float K;
+
+    if ((*kf).init == 0)
+    {
+        (*kf).x = measurement;
+        (*kf).init = 1;
+    }
+
+    // Prediction step
+    (*kf).P = (*kf).P + (*kf).Q;
+
+    // Kalman gain
+    K = (*kf).P / ((*kf).P + (*kf).R);
+
+    // Correction step
+    (*kf).x = (*kf).x + K * (measurement - (*kf).x);
+
+    // Update error estimate
+    (*kf).P = (1.0f - K) * (*kf).P;
+
+    return (*kf).x;
+}
+
 void Error_func(void);
 
 static void Define_ADC(ADC_TypeDef *ADCx, uint32_t RESOLUTION, uint32_t CHANNEL, uint32_t SAMPLE_TIME, ADC_HandleTypeDef *ADC_CLASS, ADC_ChannelConfTypeDef *ADC_CONFIG)

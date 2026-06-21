@@ -44,6 +44,9 @@ UART_HandleTypeDef 			huart1;
 UART_HandleTypeDef			huart2;
 TIM_HandleTypeDef   		TimInt2;
 
+KalmanFilter_t kf_ax;
+KalmanFilter_t kf_ay;
+KalmanFilter_t kf_az;
 
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -51,11 +54,16 @@ TIM_HandleTypeDef   		TimInt2;
 
 uint8_t raw_data[6];
 uint8_t error_state = 0;
-uint8_t who = 0;
 uint8_t comp_ok = 0;
 int16_t x_acc;
 int16_t y_acc;
 int16_t z_acc;
+char rxBuffer[10];
+uint8_t rxChar;
+uint8_t index_Val = 0;
+uint8_t lineReady = 0;
+
+
 
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
@@ -68,8 +76,10 @@ static void MPU6050_Init(void);
 void MX_USART2_MspInit(void);
 static void MX_USART2_UART_Init(void);
 
+void MX_USART1_MspInit(void);
 static void MX_USART1_UART_Init(void);
-void HAL_UART1_MspInit(UART_HandleTypeDef* uartHandle);
+
+void USART1_IRQHandler(void);
 
 //		TIMER
 void TIM2_IRQHandler(void);
@@ -97,30 +107,38 @@ int main(void)
 	MPU6050_Init();
 		
 	//		UART
+	MX_USART1_MspInit();
 	MX_USART1_UART_Init();	
 
 	MX_USART2_MspInit();
 	MX_USART2_UART_Init();
+	
+	//		KALMAN FILTER
+	Kalman_Init(&kf_ax, 0.02f, 10.0f, 1.0f);
+	Kalman_Init(&kf_ay, 0.02f, 10.0f, 1.0f);
+	Kalman_Init(&kf_az, 0.02f, 10.0f, 1.0f);
 		
 	//		TIMER_Interrupt
 	TIM_interrupt(1000,8000,TIM2,TIM2_IRQn,&TimInt2);
-		
-	char msg[] = "Hello from STM32 USART1\r\n";
-	uint8_t rxData;
 
 	while (1)
 	{
-//    HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-
-//    /* Try to receive 1 byte */
-//    if (HAL_UART_Receive(&huart1, &rxData, 1, 100) == HAL_OK)
-//    {
-//      HAL_UART_Transmit(&huart1, &rxData, 1, HAL_MAX_DELAY);
-//    }
-//    HAL_Delay(1000);
+		
 	}
 }
-	
+
+void data_Sent(){
+	if (lineReady == 1)
+	{
+			lineReady = 0;
+			printf("%s,%d,%d,%d\r\n", rxBuffer, x_acc, y_acc, z_acc);
+	}
+	else
+	{
+			printf("%d,%d,%d\r\n", x_acc, y_acc, z_acc);
+	}
+}
+
 void MPU6050_Values(){
 	HAL_StatusTypeDef okey = HAL_I2C_IsDeviceReady(&hi2c1,MPU6050_ADDR,1,100);
 	if (okey == HAL_OK) {
@@ -128,11 +146,15 @@ void MPU6050_Values(){
 	}else{
 		comp_ok = 0;
 	}
-	HAL_I2C_Mem_Read(&hi2c1,MPU6050_ADDR,MPU6050_REG_ACCEL_XH,I2C_MEMADD_SIZE_8BIT,raw_data,6,100);
+	HAL_I2C_Mem_Read(&hi2c1,MPU6050_ADDR,MPU6050_REG_GYRO_XH,I2C_MEMADD_SIZE_8BIT,raw_data,6,100);
 	x_acc = ((int16_t)raw_data[0] << 8) + raw_data[1];
 	y_acc = ((int16_t)raw_data[2] << 8) + raw_data[3];
 	z_acc = ((int16_t)raw_data[4] << 8) + raw_data[5];
-	printf("%d,%d,%d \r\n", x_acc,y_acc,z_acc);
+	x_acc = Kalman_Update(&kf_ax, (float)x_acc);
+	y_acc = Kalman_Update(&kf_ay, (float)y_acc);
+	z_acc = Kalman_Update(&kf_az, (float)z_acc);
+	//printf("%d,%d,%d \r\n", x_acc,y_acc,z_acc);
+	data_Sent();
 }
 
 int fputc(int ch, FILE *f)
@@ -145,6 +167,30 @@ void TIM2_IRQHandler(void)
 {
   HAL_TIM_IRQHandler(&TimInt2);
 	MPU6050_Values();
+}
+
+void USART1_IRQHandler(void)
+{
+    HAL_UART_IRQHandler(&huart1);
+		if (rxChar == '\n')
+		{
+				rxBuffer[index_Val] = '\0';
+				index_Val = 0;
+				lineReady = 1;
+		}
+		else if (rxChar != '\r')
+		{
+				if (index_Val < sizeof(rxBuffer) - 1)
+				{
+						rxBuffer[index_Val++] = rxChar;
+				}
+				else
+				{
+						index_Val = 0;
+				}
+		}
+
+		HAL_UART_Receive_IT(&huart1, &rxChar, 1);
 }
 
 static void MPU6050_Init(void)
@@ -182,31 +228,32 @@ static void MX_USART1_UART_Init(void)
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
 
   if (HAL_UART_Init(&huart1) != HAL_OK) Error_Handler();
+	//HAL_UART_Receive_IT(&huart1, &rxChar, 1);
 }
 
-void HAL_UART1_MspInit(UART_HandleTypeDef* uartHandle)
+void MX_USART1_MspInit(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  if ((*uartHandle).Instance == USART1)
-  {
-    __HAL_RCC_USART1_CLK_ENABLE();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_USART1_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 
-    /*
-      USART1 GPIO Configuration
-      PA9  ------> USART1_TX
-      PA10 ------> USART1_RX
-    */
+	/*
+		USART1 GPIO Configuration
+		PA9  ------> USART1_TX
+		PA10 ------> USART1_RX
+	*/
 
-    GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_10;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 
-    GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  }
+	GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	
+	//HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
+	//HAL_NVIC_EnableIRQ(USART1_IRQn);
 }
 
 void MX_USART2_MspInit(void)
