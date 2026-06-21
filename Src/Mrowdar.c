@@ -228,7 +228,7 @@ static void MX_USART1_UART_Init(void)
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
 
   if (HAL_UART_Init(&huart1) != HAL_OK) Error_Handler();
-	//HAL_UART_Receive_IT(&huart1, &rxChar, 1);
+	HAL_UART_Receive_IT(&huart1, &rxChar, 1);
 }
 
 void MX_USART1_MspInit(void)
@@ -252,8 +252,8 @@ void MX_USART1_MspInit(void)
 	GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	
-	//HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
-	//HAL_NVIC_EnableIRQ(USART1_IRQn);
+	HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
 }
 
 void MX_USART2_MspInit(void)

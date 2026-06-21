@@ -158,32 +158,22 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>raw_data[1],0x0A</ItemText>
+          <ItemText>lineReady,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>raw_data[2],0x0A</ItemText>
+          <ItemText>comp_ok,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>lineReady,0x0A</ItemText>
+          <ItemText>x_acc,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>comp_ok,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>x_acc,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>rxBuffer</ItemText>
+          <ItemText>rxBuffer,0x10</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
